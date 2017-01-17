@@ -1,0 +1,91 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Update Profile | tulong.ph {% endblock %}
+{% block extrahead %}
+
+{% endblock extrahead %}
+{% block page_content %}
+<div class="container">
+<div class="page-header">
+      <h1>Update Profile</h1>
+    </div>
+
+
+<form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.errors}}
+<p>
+    {{ form.person.error }}
+    {{ form.person.label }} {{ form.person }}
+</p>
+<p>
+    {{ form.firstname.error }}
+    {{ form.firstname.label }} {{ form.firstname }}
+</p>
+<p>
+    {{ form.lastname.error }}
+    {{ form.lastname.label }} {{ form.lastname }}
+</p>
+<p>
+    {{ form.contactno.error }}
+    {{ form.contactno.label }} {{ form.contactno }}
+</p>
+<p>
+    {{ form.slug.error }}
+    {{ form.slug.label }} {{ form.slug }}
+</p>
+{% if is_staff %}
+<p>
+    {{ form.person_class.error }}
+    {{ form.person_class.label }} {{ form.person_class }}
+</p>
+<p>
+    {{ form.is_verified.error }}
+    {{ form.is_verified.label }} {{ form.is_verified }}
+</p>
+<p>
+    {{ form.is_active.error }}
+    {{ form.is_active.label }} {{ form.is_active }}
+</p>
+{% endif %}
+<p>
+    {{ form.address.error }}
+    {{ form.address.label }} {{ form.address }}
+</p>
+<p>
+    {{ form.info.error }}
+    {{ form.info.label }} {{ form.info }}
+</p>
+<p>
+    {{ form.birthday.error }}
+    {{ form.birthday.label }} {{ form.birthday }}
+</p>
+
+<p>
+    {{ form.skills.error }}
+    {{ form.skills.label }} {{ form.skills }}
+</p>
+{% if is_staff %}
+<p>
+    {{ form.badge.error }}
+    {{ form.badge.label }} {{ form.badge }}
+</p>
+{% endif %}
+<p>
+    {{ form.image.error }}
+    {{ form.image.label }} {{ form.image }}
+</p>
+
+
+
+
+<input type="submit" 
+       value="Update" 
+       name="Update" class='btn' />
+       <div class="btn"><a href="/">Cancel</a></div>
+</form>
+
+</div>
+{% endblock %}

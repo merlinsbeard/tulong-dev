@@ -1,0 +1,16 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Bid Detail {% endblock %}
+
+{% block page_content %}
+<div class="container">
+<h1>message list</h1>
+	{% for m in message_list %}
+
+		<p><a href="{{ m.get_absolute_url }}">{{m}}</a></p>
+		<p>{{ m.content|safe }}</p>
+	{% endfor %}
+</div>
+{% endblock %}

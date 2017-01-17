@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block page_title %}{% endblock %}</title>
+	
+	
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="{{ STATIC_URL }}css/stylesheet.cs" rel="stylesheet">
+	<link rel="shortcut icon" href="https://s3.amazonaws.com/tulong/static/images/favicon.png"/>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+
+	{% block extrahead %}{% endblock %}
+
+<style type="text/css">
+	header {
+		background: #2d2d2d;
+		color: white;
+	}
+	header .navbar { 
+		background: #2d2d2d;
+		
+	}
+
+		#map_gmap img {
+		    max-width: none;
+		}
+
+	{% block extrastyle %}{% endblock %}
+	</style>
+</head>
+<body>
+
+
+
+
+
+<header>
+	<div class="container">
+	<div class="navbar navbar-inverse">
+	  <div class="container">
+	    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+
+	    <!-- Be sure to leave the brand out there if you want it shown -->
+	    <a class="navbar-brand" href="http://.ph">
+			<img src="https://s3.amazonaws.com/tulong/static/images/tulonglogo.png" alt=".ph" title="Click to return to tulong.ph">
+		</a>
+
+	    <!-- Place everything within .navbar-collapse to hide it until above 768px -->
+	    <div class="nav-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li {% block home_class %}{% endblock %}>
+						<a href="/">Home</a>
+					</li>
+					{% if user.is_authenticated %}
+					<li>
+						<a href="{% url 'logout' %}">Logout</a>
+					</li>
+					<li><a href="{% url 'person:detail' user.person.slug %}">Profile</a></li>
+					{% else %}
+					<li {% block login_class %}{% endblock %}>
+						<a href="{% url 'login' %}">Login</a>
+					</li>
+					{% endif %}
+					<li {% block jobpost_class %}{% endblock %}>
+						{% if user.person.person_class.slug == 'poster' %}
+							<a href="/job/post/">Post a Job</a>
+								
+						{% endif %}
+					</li>
+					<li {% block job_class %}{% endblock %}>
+						<a href="/job/">Jobs</a>
+					</li>
+					
+					{% block nav %}{% endblock %}
+
+			</ul>
+			<p class="nav pull-left navbar-text "><a href="/contactus/">
+				Contact us Anytime: </a><br>
+				<em class="text-warning">+63 917 XXX XXXX</em>
+				
+			</p>
+			<p class="nav navbar-text pull-right">
+				
+						hi! {{ user }}
+					
+			</p>
+	    </div><!-- /.nav-collapse -->
+	  </div><!-- /.container -->
+	</div><!-- /.navbar -->
+	</div>
+</header>
+
+<section class="body">
+	{% if user.is_authenticated %}
+		{% if not user.person.is_verified %}
+		<div class="alert alert-error">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		  <h4>Not Yet Verified</h4>
+		  You are not yet verified. Click this link on how to become verified.
+		   <a href="/faqs/">here</a>
+		</div>
+		{% endif %}
+	{% endif %}
+	{% block page_content %}{% endblock %}
+</section>
+
+
+
+<footer style="background:#2d2d2d; color:white;">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 col-sm-4 col-12">
+				<h4>Address</h4>
+				<address>
+					302 Rickland Centre <br>
+					Marcos Highway <br>
+					Antipolo City
+				</address>
+				<h4>Contact</h4>
+				<p>
+					E: tulong@tulong.ph <br>
+					T: 02 477 XXXX <br>
+					M: +63 917 XXX XXXX
+				</p>
+			</div>
+			<div class="col-lg-4 col-sm-4 col-12">
+				<h4>Explore</h4>
+				<ul>
+					{% if user.is_authenticated %}
+						<li>
+							<a href="{% url 'logout' %}">Logout</a>
+						</li>
+						<li><a href="{% url 'person:detail' user.person.slug %}">Profile</a></li>
+						{% else %}
+						<li>
+							<a href="{% url 'login' %}">Login</a>
+						</li>
+					{% endif %}
+					<li><a href="http://tulong.herokuapp.com">Home</a></li>
+					<li><a href="/job/">Jobs</a></li>
+					<li><a href="/aboutus/">About Us</a></li>
+					<li><a href="/contactus/">Contact Us</a></li>
+					<li><a href="/aboutus/faqs">Faqs</a></li>
+				</ul>
+			</div>
+			<div class="col-lg-4 col-sm-4 col-12">
+				<h4>Get to know us more</h4>
+				<ul>
+					<li><a href="http://facebook.com/tulongph">Facebook</a></li>
+					<li><a href="http://twitter.com/tulongph">Twitter</a></li>
+					<li><a href="http://blog">Blog</a></li>
+					
+				</ul>
+			</div>
+		</div>	
+		<div class="row">
+			<p class="text-center">
+				201X tulong.ph©
+			</p>
+		</div>	
+	</div>
+</footer>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript">
+  $(".collapse").collapse()
+</script>
+
+</body>
+</html>

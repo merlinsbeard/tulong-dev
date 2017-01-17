@@ -1,0 +1,46 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Tasks Archive for {{ jobs_status }} | tulong.ph{% endblock %}
+
+{% block page_content %}
+<div class="container">
+<div class="page-header">
+      <h1>Jobs </h1>
+    </div>
+
+  <h3 class="box">{{ jobs_status }}</h3>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Date Due</th>
+              <th># of Bidders</th>
+              <th>Status</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for job in jobs %}
+            <tr>
+              <td><a href="{{ job.get_absolute_url }}">{{ job.title }}</a> </td>
+              <td>{{ job.date_need.date }}</td>
+              <td>{{ job.bid_set.all.count }}</td>
+              <td>
+                {% if job.is_done %}
+                  <span class="label label-success">Job is Done</span>
+                {% elif not job.bid_set.all %}
+                  <span class="label label-info">Waiting for bidders</span>
+                {% elif job.bid_set.all %}
+                  <span class="label label-warning">Waiting to choose bidder</span>
+                {% endif %}
+              </td>
+              <td> <a href="{{ job.get_absolute_url }}" class="btn btn-info">View</a> </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+</div>
+
+{% endblock %}

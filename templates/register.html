@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block page_title %}Register Kaakay {% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+      <h1>Register </h1>
+    </div>
+      
+    <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
+        
+
+        {% if form.email.errors %}
+        <div class="control-group error">
+            <label for="email" class="control-label">
+                Email
+            </label>
+            <div class="controls">
+                {{ form.email }}
+                <span class="help-inline">Please input email</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="email" class="control-label">
+                Email
+            </label>
+            <div class="controls">
+                {{ form.email}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.password.errors %}
+        <div class="control-group error">
+            <label for="password" class="control-label">
+                Password
+            </label>
+            <div class="controls">
+                {{ form.password }}
+                <span class="help-inline">Please input password</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="password" class="control-label">
+                Password
+            </label>
+            <div class="controls">
+                {{ form.password}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.password1.errors %}
+        <div class="control-group error">
+            <label for="password1" class="control-label">
+                Verify Password
+            </label>
+            <div class="controls">
+                {{ form.password1 }}
+                <span class="help-inline">Please input password1</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="password1" class="control-label">
+               Verify Password
+            </label>
+            <div class="controls">
+                {{ form.password1}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.firstname.errors %}
+        <div class="control-group error">
+            <label for="firstname" class="control-label">
+                Firstname
+            </label>
+            <div class="controls">
+                {{ form.firstname }}
+                <span class="help-inline">Please input firstname</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="firstname" class="control-label">
+                Firstname
+            </label>
+            <div class="controls">
+                {{ form.firstname}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.lastname.errors %}
+        <div class="control-group error">
+            <label for="lastname" class="control-label">
+                Lastname
+            </label>
+            <div class="controls">
+                {{ form.lastname }}
+                <span class="help-inline">Please input lastname</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="lastname" class="control-label">
+                Lastname
+            </label>
+            <div class="controls">
+                {{ form.lastname}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.contactno.errors %}
+        <div class="control-group error">
+            <label for="contactno" class="control-label">
+                Contact No
+            </label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">+63</span>
+                    {{ form.contactno }}
+                    <span class="help-inline">{{ form.contactno.errors }}</span>
+                </div>
+                
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="contactno" class="control-label">
+                Contact No
+            </label>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">+63</span>
+                    {{ form.contactno }}
+                    
+                </div>
+        
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.birthday.errors %}
+        <div class="control-group error">
+            <label for="birthday" class="control-label">
+                Birthday
+            </label>
+            <div class="controls">
+                {{ form.birthday }}
+                <span class="help-inline">{{ form.birthday.errors }}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="birthday" class="control-label">
+                Birthday
+            </label>
+            <div class="controls">
+                {{ form.birthday}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.address.errors %}
+        <div class="control-group error">
+            <label for="address" class="control-label">
+                Address
+            </label>
+            <div class="controls">
+                {{ form.address }}
+                <span class="help-inline">{{ form.address.errors }}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <label for="address" class="control-label">
+                Address
+            </label>
+            <div class="controls">
+                {{ form.address}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if is_doer %}
+            {% if form.skills.errors %}
+            <div class="control-group error">
+                <label for="skills" class="control-label">
+                    Skills
+                </label>
+                <div class="controls">
+                    {{ form.skills }}
+                    <span class="help-inline">Please input skills</span>
+                </div>
+            </div>
+            {% else %}
+            <div class="control-group">
+                <label for="skills" class="control-label">
+                    Skills
+                </label>
+                <div class="controls">
+                    {{ form.skills }}
+                </div>
+            </div>
+            {% endif %}
+
+        
+        {% endif %}
+        
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox">
+                        {{ form.terms }} I hereby accept your <a href="{% url 'terms_and_conditions' %}"> terms and conditions</a>
+                        <span class="help-inline">{{ form.terms.errors }}.</span>
+                    </label>
+                    <input type="submit" alt="register" name="register" value="Register" class="btn btn-large btn-success"/>
+                    <a href="/">Back</a>
+                </div>
+            </div>
+    
+
+    </form>
+</div>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}datepicker/css/datepicker.css">
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script src="{{ STATIC_URL }}datepicker/js/bootstrap-datepicker.js"></script>
+<script>
+	     $('.datepicker').datepicker(); 
+</script>
+{% endblock %}

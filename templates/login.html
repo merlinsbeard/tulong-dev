@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_title %}Login | tulong.ph {% endblock %}
+{% block extrastyle %}
+
+{% endblock %}
+{% block page_content %}
+<div class="container">
+    <br>
+    <form action="" method="post" class="col-lg-5">
+        {% csrf_token %}
+        <h2>Please Login</h2>
+        {{ form.errors }}
+        {% if form.username.errors %}
+        <div class="control-group error">
+            <div class="controls">
+                {{ form.username }}
+                <span class="help-inline">{{ form.username.errors }}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <div class="controls">
+                {{ form.username}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if form.password.errors %}
+        <div class="control-group error">
+            <div class="controls">
+                {{ form.password }}
+                <span class="help-inline">Please input Password</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="control-group">
+            <div class="controls">
+                {{ form.password}}
+            </div>
+        </div>
+        {% endif %}
+        <p>Forgot your password? <a href="/resetpassword/">Reset it!</a></p>
+        <input type="submit" alt="login" class="btn btn-large btn-primary" name="login" value="Login"/> or <a href="/register/">Register</a>
+    </form>
+</div>
+{% endblock %}

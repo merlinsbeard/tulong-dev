@@ -1,0 +1,20 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Bid Detail {% endblock %}
+
+{% block page_content %}
+<div class="container">
+		<h1>delete confirmation</h1>
+
+	<form action="" method="post"> 
+	{% csrf_token %} 
+	<input type="submit" 
+	       value="Delete {{ object }}" 
+	       name="Confirm" class='btn' /> 
+	</form>
+
+	<div class="btn"><a href="{{ object.get_absolute_url }}">Cancel</a></div>
+</div>
+{% endblock %}

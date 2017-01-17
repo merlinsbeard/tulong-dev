@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% block page_title %}Welcome {{ person.firstname|title }} | tulong.ph {% endblock %}
+{% block extrahead %}
+<style>
+	.person_image {
+		max-height: 10em;
+		min-height: 5em;
+	}
+</style>	
+{% endblock extrahead %}
+{% block page_content %}
+
+{% load url from future %}
+
+<div class="container">
+	<div class="page-header">
+				<div class="row">
+					<div class="col-lg-3">
+						
+						<img 
+						{% if person.image %}
+						src="{{ person.image.url }}" 
+						{% else %}
+						src="https://s3.amazonaws.com/tulong/media/images/default.jpg"
+						{% endif %}
+						alt="" class="person_image">
+					</div>
+					<div class="col-lg-6">
+						<h2>Hello, <br> {{ person.firstname|title }}</h2>
+					</div>
+					
+				</div>
+			</div>
+	<div class="row">
+		<div class="col-lg-8">
+			
+			<div class="row">
+				<div class="col-lg-12">
+					{% if jobs_need_comment %}
+					<h3>Finish Tasks That Needs Comments</h3>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task</th>
+								
+								<th>Status</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+						{% for job in jobs_need_comment %}
+							{% if job.is_done %}
+							<tr class="success">
+							{% elif not job.bid_set.all %}
+								<tr class="info">
+							{% elif job.bid_set.all %}
+								<tr class="warning">
+							{% endif %}
+							
+								<td><a href="{{ job.get_absolute_url }}">{{ job.title }}</a> </td>
+								
+								<td>
+									
+										<span class="label label-warning">Give Comment and rating</span>
+									
+								</td>
+								<td> <a href="{{ job.get_absolute_url }}" class="btn btn-info">View Job to Comment</a>
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					{% endif %}
+
+
+
+					<h3>Current Tasks</h3>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Date Due</th>
+								<th>Status</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="4"> <a href="{% url 'dashboard:pending' %}"><small>View All Pending Tasks</small></a> </td>
+							</tr>
+						</tfoot>
+						<tbody>
+						{% if jobs %}
+						{% for job in jobs %}
+							{% if job.is_done %}
+							<tr class="success">
+							{% elif not job.bid_set.all %}
+								<tr class="info">
+							{% elif job.bid_set.all %}
+								<tr class="warning">
+							{% endif %}
+							
+								<td><a href="{{ job.get_absolute_url }}">{{ job.title }}</a> </td>
+								<td>{{ job.date_need.date }}</td>
+								<td>
+									{% if job.is_done %}
+										<span class="label label-success">Job is Done</span>
+									{% elif not job.bid_set.all %}
+										<span class="label label-info">Waiting for bidders</span>
+									{% elif job.bid_set.all %}
+										{% if job.has_winner %}
+											<span class="label label-info">Waiting to confirm task is done</span>
+										{% else %}
+											<span class="label label-warning">Waiting to choose bidder</span>
+										{% endif %}
+										
+									{% endif %}
+								</td>
+								<td> <a href="{{ job.get_absolute_url }}" class="btn btn-info">View</a> </td>
+							</tr>
+						{% endfor %}
+						{% else %}
+							<tr>
+								<td colspan="4">No Pending Task</td>
+							</tr>
+						{% endif %}
+						</tbody>
+					</table>
+
+					{% if jobs_not_finish %}
+					<h3>Jobs that Expired</h3>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Date Due</th>
+								<th>Status</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="4"> <a href="{% url 'dashboard:expired' %}"><small>View All Expired Tasks</small></a> </td>
+							</tr>
+						</tfoot>
+						<tbody>
+						{% for job in jobs_not_finish %}
+							{% if job.is_done %}
+							<tr class="success">
+							{% elif not job.bid_set.all %}
+								<tr class="error">
+							{% elif job.bid_set.all %}
+								<tr class="warning">
+							{% endif %}
+							
+								<td><a href="{{ job.get_absolute_url }}">{{ job.title }}</a> </td>
+								<td>{{ job.date_need.date }}</td>
+								<td>
+									{% if job.is_done %}
+										<span class="label label-success">Job is Done</span>
+									{% elif not job.bid_set.all %}
+										<span class="label label-error">No bidders</span>
+									{% elif job.bid_set.all %}
+										<span class="label label-warning">Has bidders not winner or job not completed</span>
+									{% endif %}
+								<td> <a href="{{ job.get_absolute_url }}" class="btn btn-info">View</a> </td>
+								</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					{% endif %}
+
+					{% if jobs_finish %}
+					<h3>Succesful tasks</h3>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Date Due</th>
+								<th>Status</th>
+								<th>Link</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="2"> <a href="{% url 'dashboard:successful' %}"><small>View All Successfull Tasks</small></a> </td>
+							</tr>
+						</tfoot>
+						<tbody>
+						{% for job in jobs_finish %}
+							
+							<tr class="success">
+								<td>
+									{% ifequal job.job_type.job_type "others" %}
+									<i class="icon-heart"></i>
+									{% endifequal %}
+									<a href="{{ job.get_absolute_url }}">{{ job.title }}</a> 
+								</td>
+								<td>{{ job.date_need.date }}</td>
+								<td>
+										<span class="label label-success">Job is Done</span>
+								<td> <a href="{{ job.get_absolute_url }}" class="btn btn-info">View</a> </td>
+								</td>
+							</tr>
+						{% endfor %}
+
+						</tbody>
+
+					</table>
+					{% endif %}	
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="row">
+				<div class="col-lg-12">
+					<nav>
+						<ul class="nav nav-list">
+							<li>
+						
+					<a href="{% url 'job:post' %}" class="btn btn-large">Post a Task</a></li>
+							<li><a href="{% url 'dashboard:pending' %}">View All Pending Tasks</a></li>
+							{% if jobs_not_finish %}
+							<li><a href="{% url 'dashboard:expired' %}">View All Expired Tasks</a> </li>
+							{% endif %}
+							{% if jobs_finish %}
+							<li><a href="{% url 'dashboard:successful' %}">View All Successfull Tasks</a></li>
+							{% endif %}
+							<li><a href="{% url 'dashboard:messages' %}">View Notifications</a></li>
+							<li><a href="{% url 'dashboard:update2' %}">Update Profile</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+						<tr><h3>Notifications</h3></tr>
+					</thead>
+					<tfoot>
+					{% if messages %}
+						<tr>
+							<td><a href="{% url 'dashboard:messages' %}"><small>View All Notifications</small></a></td>
+						</tr>
+					{% endif %}
+					</tfoot>
+					<tbody>
+						{% for m in messages %}
+						<tr>
+							<td>
+								<div class="media">
+									<a href="{{ m.sender.get_absolute_url }}" class="pull-left">
+										
+										<img src="{% if m.sender.image %}
+										{{ m.sender.image.url }}{% else %}https://s3.amazonaws.com/tulong/media/images/default.jpg{% endif %}
+
+										" alt="" width="40" height="40">
+									</a>
+									<div class="media-body">
+										{{ m.content|safe }}
+										<br>
+										@ <strong>{{ m.pub_date_time }}</strong>
+									</div>
+								</div>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>	
+			</div>
+		</div>	
+	</div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %} {{ person.firstname|title }} | tulong.ph {% endblock %}
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}raty/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}raty/js/jquery.raty.min.js"></script>
+<style>
+	.profile .top_left, .profile .about {
+		text-align: center;
+	}
+	.profile .top_left img {
+		max-width: 10em;
+	}
+	.right {
+		margin-top: 1em;
+	}	
+</style>
+{% endblock extrahead %}
+{% block page_content %}
+<div class="container">
+	
+<section class="profile">
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="page-header">
+	      		<h2>
+	      		<img src="{% if person.image %}{{ person.image.url }}{% else %}https://s3.amazonaws.com/tulong/media/images/default.jpg{% endif %}" alt="" width="60" height="60">
+	      			{{ person|title }}
+	      		<small>
+	      			{% ifequal person.person_class.person_class "doer" %}
+						Kaakay
+						{% else %}
+						 {{ person.person_class.person_class|title }}
+						{% endifequal %}
+	      		</small>
+	      		</h2>
+		    </div>
+			<div class="row">
+				<div class="col-lg-12">
+
+				</div>
+
+
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="skills">
+							<h3 class="well">Skills</h3>
+							{% if person.skills.all %}
+								{% for s in person.skills.all %}
+									<span class="label label-info" style="margin: 5px;"> {{ s }} </span>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="row">
+						<div class="badges">
+							<h3 class="well">Badge</h3>
+							{% if person.badge.all %}
+							
+							{% for b in person.badge.all %}
+							<div class="col-lg-4 col-sm-6">
+								<img src="{{ b.image.url }}" alt="{{ b }}">
+								<p>{{ b.badge|title }}</p>
+								<p>
+									{{ b.description }}
+								</p>
+							</div>
+							{% empty %}
+								<h2>no badge yet</h2>
+							{% endfor %}
+							
+							{% endif %}
+						</div>
+					</div>	
+					<div class="row">
+						<h3 class="well">About me</h3>
+					<p>{{ person.info|linebreaks }}</p>
+					</div>
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+				{% if person_doer %}
+					<h3 class="box">Jobs/Tasks Done</h3>
+					{% if jobs %}
+						<ul class="unstyled">
+						{% for job in jobs %}
+							<li>
+								<p>
+									<strong><a href="{{ job.get_absolute_url }}">{{ job.title|title }}	</a></strong> - <span class="muted">{{ job.creator|title }}</span> <br>
+									<small class="muted">{{ job.date_need|date:"M Y" }}</small>
+								</p>
+							</li>
+						{% endfor %}
+						</ul>
+					{% else %}
+						<p>No jobs yet</p>
+					{% endif %}
+				{% elif person_poster %}
+					<div class="caged" >
+					<h3 class="box">Jobs/Tasks Posted</h3>
+					</div>
+					{% if jobs %}
+					<ul class="unstyled">
+					{% for job in jobs_done %}
+						<li>
+							<p class="description">
+								<strong><a href="{{ job.get_absolute_url }}">{{ job.title|title }}	</a></strong> <br>
+								<small class="muted">{{ job.date_need|date:"M Y" }}</small>
+							</p>
+						</li>
+					{% endfor %}
+					</ul>
+					{% else %}
+					<p>No jobs yet</p>
+					{% endif %}
+				{% endif %}
+				</div>
+			</div>
+				
+		</div>
+		<div class="col-lg-4">
+			<div class="right">
+				{% ifequal person.person_class.person_class 'doer' %}
+					{% if is_poster %}
+					<form action="" method="post">
+						{% csrf_token %} 
+				        <input type="submit" value="Hire for Task" class="btn btn-success btn-block btn-large">
+				    </form>
+				    {% endif %}
+				   {% endifequal %}
+				<div class="rating">
+					<h3 class='lean'>Rating</h3>
+					<p class="text-center">
+						<span class="lead">
+							{% if comments %}
+							<span class="star{{ rating }}"></span> {{ rating }}/5
+							Average of {{ comments.count }} all Ratings
+							{% else %}
+							No Rating yet
+							{% endif %}
+						</span>
+					</p>
+				</div>
+				<div class="comments">
+					<h4>Reviews {{ comments.count }}</h4>
+					{% if comments %}
+						<table class="table">
+							<tfoot>
+								<tr>
+									<td colsapn='1'><a href="{{ person.get_absolute.url }}comments"><small>View all Reviews</small></a></td>
+								</tr>
+							</tfoot>
+							<tbody>
+							{% for c in comments %}
+								<tr>
+									<td>
+										<p>
+											<strong class="text-success">{{ c.commentor|title }}</strong> gave a rating of <span class="star{{ c.rating }}"></span><br>
+											<a href="{{ c.job.get_absolute_url }}">{{ c.job|title }} </a> <br>
+											<small class="muted"> {{ c.date_time_posted|date:"M Y" }}</small> <br>
+											{{ c.comment }} <br>
+											
+										</p>
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					{% else %}
+						No comments yet
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<script src='{{ STATIC_URL }}raty/js/stars.js' type='text/javascript'></script>
+<script type="text/javascript">
+	$.fn.raty.defaults.path = '{{ STATIC_URL }}raty/img';
+	$('.star').raty({});
+	$('.star1').raty({
+	readOnly  : true,
+	score: 1,
+	});
+	$('.star2').raty({
+	readOnly  : true,
+	score: 2,
+	});
+	$('.star3').raty({
+	readOnly  : true,
+	score: 3,
+	});
+	$('.star4').raty({
+	readOnly  : true,
+	score: 4,
+	});
+
+	$('.star5').raty({
+	readOnly  : true,
+	score: 5,
+	});	
+</script>
+</div>
+{% endblock %}

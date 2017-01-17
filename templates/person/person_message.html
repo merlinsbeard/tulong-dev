@@ -1,0 +1,18 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Notifications | tulong.ph {% endblock %}
+
+{% block page_content %}
+<div class="container">
+<div class="page-header">
+      <h1>Messages</h1>
+    </div>
+<ul>
+{% for m in messages %}
+	<li>{{ m|safe }} @ {{ m.pub_date_time }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}

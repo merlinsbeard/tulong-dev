@@ -1,0 +1,35 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}{{ job|title }} in {{ job.city }} | tulong.ph {% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<h3 class="box">ALL BIDS for <a href="{{ job.get_absolute_url }}">{{ job.title|title }}</a></h3>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<td>Bidder</td>
+				<td>Amount</td>
+				<td>Message</td>
+				<td>Date Posted</td>
+				<td>Link</td>
+			</tr>
+		</thead>
+		<tbody>
+		{% for bid in job.bid_set.all %}
+			<tr>
+				<td> <a href="{{ bid.bidder.get_absolute_url }}">{{ bid.bidder|title }}</a></td>
+				<td>P {{ bid.amount }}</td>
+				<td>{{ bid.message|linebreaks }}</td>
+				<td>{{ bid.created_at.date }}</td>
+				<td> <a href="{{ bid.get_absolute_url }}" class="btn btn-info">View Bid</a>
+	                         </td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

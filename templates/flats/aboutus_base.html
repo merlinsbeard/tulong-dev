@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+	{% block page_title %}About Us! | tulong.ph {% endblock %}
+	{% block extrastyle %}
+	
+	{% endblock %}
+{% block page_content %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 col-offset-1">
+			<nav class="">
+				<br>
+				<ul class="nav nav-list">
+					<li>
+						<a href="{% url 'aboutus' %}">About us</a>
+					</li>
+					<li>
+						<a href="/aboutus#how_it_works">How things works</a>
+					</li>
+					<li>
+						<a href="/aboutus#team">Team</a>
+					</li>
+					<li>
+						<a href="{% url 'faqs' %}">FAQS</a>
+					</li>
+					<li>
+						<a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-lg-6">
+			<div class="page-header">
+				<h1>{% block pageheader %}{% endblock %}</h1>
+			</div>
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+</div>
+	
+
+{% endblock %}
+
+
+

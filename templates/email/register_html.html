@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+
+<p>Hello {{ full_name|title }},</p>
+
+<p>Thank you for signing up at <a href="http://www.tulong.ph">tulong.ph</a>.</p>
+<p>Your username is <strong>{{ person.person.email }}</strong></p>
+
+
+{% ifequal person.classification 'doer' %}
+<p>To complete your registration and begin doing jobs and tasks, please go through the verification process. Simply follow these steps:</p>
+<ol>
+	<li>Reply to this email with picture of your NBI and Police or Brgy. Clearance.</li>
+	<li>As an option (and added badge), you may also send pictures of your certificates earned. (TESDA Certification, Short Course Certification, etc.)</li>
+	<li>Wait for the confirmation email and you’re all set!</li>
+</ol>
+<p><small>note: if you don’t have a camera, you can visit our office at 2nd Floor Mercury Drug Bldg. Marcos Hi-way, Masinag, Antipolo City.</small></p>
+{% else %}
+<p>To complete your registration and begin posting jobs/tasks, please go through the verification process. Simply follow these steps:</p>
+<ol>
+	<li>Reply to this email with picture of a latest billing statement and a government ID</li>
+	<li> Wait for the confirmation email and you’re all set!</li>
+</ol>
+<p><small>note: if you don’t have a camera, you can visit our office at 2nd Floor Mercury Drug Bldg. Marcos Hi-way, Masinag, Antipolo City.</small></p>
+{% endifequal %}
+<p>For questions and concerns, please visit our <a href="http://www.tulong.ph/faqs">FAQS</a></p>
+
+<p>Your tulong.ph support team</p>
+<address>
+2nd Floor Mercury Drug Bldg. <br>
+Masinag, Antipolo City <br>
+263 477 2068 <br>
+cs@tulong.ph <br>
+</address>
+
+</body>
+</html>

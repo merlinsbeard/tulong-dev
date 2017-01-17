@@ -1,0 +1,32 @@
+
+
+{% extends "base.html" %}
+
+{% block page_title %}Job Update | tulong.ph {% endblock %}
+{% block extrahead %}{{ form.media }}{% render_googlemap_head %}{% endblock %}
+{% block page_content %}
+<div class="container">
+    <form action="" method="post" >
+          {% csrf_token %}
+           <form action="" method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Yes"></p>
+        </form>
+    </form>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}datepicker/css/datepicker.css">
+    <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+    <script src="{{ STATIC_URL }}datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script>
+        $('.datepicker').datepicker({
+        startDate: "1d",
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true
+    });
+    </script>
+</div>
+{% endblock %}
+

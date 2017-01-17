@@ -1,0 +1,28 @@
+{% block plain %}
+Hello,
+
+Thank you for signing up at tulong.ph.
+
+To complete your registration, please go through the verification process. Simply follow these steps:
+{% ifequal person.classification 'doer' %}
+	1. Reply to this email with picture of your NBI and Police or Brgy. Clearance.
+	2. As an option (and added badge), you may also send pictures of your certificates earned. (TESDA Certification, Short Course Certification, etc.)
+	3. Wait for the confirmation email and you’re all set!
+
+note: if you don’t have a camera, you can visit our office at 2nd Floor Mercury Drug Bldg. Marcos Hi-way, Masinag, Antipolo City.
+{% else %}
+
+	1. Reply to this email with picture of a latest billing statement and a government ID
+ 	2. Wait for the confirmation email and you’re all set!
+
+note: if you don’t have a camera, you can visit our office at 2nd Floor Mercury Drug Bldg. Marcos Hi-way, Masinag, Antipolo City.
+{% endifequal %}
+For questions and concerns, please visit our http://www.tulong.ph/faqs
+
+Your tulong.ph support team
+
+2nd Floor Mercury Drug Bldg.
+Masinag, Antipolo City
+263 477 2068
+cs@tulong.ph
+{% endblock %}

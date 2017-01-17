@@ -1,0 +1,60 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Person Comment {% endblock %}
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}raty/js/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}raty/js/jquery.raty.min.js"></script>
+{% endblock extrahead %}
+{% block page_content %}
+<section class="profile">
+	<h2><a href="{{ profile.get_absolute_url }}">{{ profile|title }}</a> comments and ratings</h2>
+
+	{% for c in comments %}
+		<div class="row-fluid">
+			<span class="span1">
+			<a href="{{ c.commentor.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ c.commentor.image }}" alt=""></a>
+			</span>
+			<span class="span11">
+				<p>
+				<span class="text-success"> <a href="{{ c.commentor.get_absolute_url }}"> {{ c.commentor|title }}</a></span> rated <span class="star{{ c.rating }}"></span><br>
+				<a href="{{ c.job.get_absolute_url }}"><span class="muted">{{ c.job|title }} </a><br>
+					{{ c.date_time_posted|date:"M Y" }}
+				</span>
+				</p>
+				<p>{{ c.comment }}</p>
+			</span>
+		</div>
+	{% endfor %}
+	
+</section>
+{{ jobs }}
+
+<script src='{{ STATIC_URL }}raty/js/stars.js' type='text/javascript'></script>
+<script type="text/javascript">
+	$.fn.raty.defaults.path = '{{ STATIC_URL }}raty/img';
+	$('.star').raty({});
+	$('.star1').raty({
+	readOnly  : true,
+	score: 1,
+	});
+	$('.star2').raty({
+	readOnly  : true,
+	score: 2,
+	});
+	$('.star3').raty({
+	readOnly  : true,
+	score: 3,
+	});
+	$('.star4').raty({
+	readOnly  : true,
+	score: 4,
+	});
+
+	$('.star5').raty({
+	readOnly  : true,
+	score: 5,
+	});	
+</script>
+{% endblock %}

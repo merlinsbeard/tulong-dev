@@ -1,0 +1,86 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Bid for {{ job.title|title }} | tulong.ph {% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="page-header">
+		<h1>{{ job.title|title }} <small class="muted">by {{ job.creator|title }}</small></h1>
+	</div>
+
+	<form action="" method="post" class="form-horizontal">
+		{% csrf_token %}
+		{% if form.amount.errors %}
+		<div class="control-group error">
+		    <label for="amount" class="control-label">
+		        Make an Offer
+		        </span>
+		    </label>
+		    <div class="controls">
+		        <div class="input-append">
+	                {{ form.amount }}
+	                <span class="add-on">.00</span>
+	                </div>
+	                <span class="help-inline">Please input Amount</span>
+	                <br>
+	                <span class="text-info"><em>*Job poster has a initial offer P{{ job.amount }}</em>
+	            </div>
+		    </div>
+		</div>
+		{% else %}
+		<div class="control-group">
+		    <label for="amount" class="control-label">
+		        Make an Offer
+		    </label>
+		    <div class="controls">
+		        <div class="input-prepend input-append">
+		          <span class="add-on">P</span>
+		          {{ form.amount }}
+		          <span class="add-on">.00</span>
+		        </div>
+		        <br>
+		        <span class="text-info"><em>*Job poster has a initial offer P{{ job.amount }}</em>
+		    </div>
+		</div>
+		{% endif %}
+
+		{% if form.message.errors %}
+		<div class="control-group error">
+		    <label for="message" class="control-label">
+		        Message
+		    </label>
+		    <div class="controls">
+		        {{ form.message }}
+		        <span class="help-inline">Please input Message.</span>
+		    </div>
+		</div>
+		{% else %}
+		<div class="control-group">
+		    <label for="message" class="control-label">
+		        Message
+		    </label>
+		    <div class="controls">
+		        {{ form.message}}
+		    </div>
+		</div>
+		{% endif %}
+
+		<div class="control-group">
+		    <div class="controls">
+		      <input type="submit" alt="bid" name="bid" class="btn btn-large btn-success"/>
+		      <a href="{{ job.get_absolute_url }}">Back</a>
+		    </div>
+		</div>
+		
+	</form>
+</div>
+ 
+
+
+
+
+
+
+{% endblock %}

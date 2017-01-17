@@ -1,0 +1,67 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+
+
+{% block page_title %}Tulong.ph {% endblock %}
+{% block extrahead %}
+<style type="text/css">
+	.thumbnail {
+		max-width: 250px;
+		
+	}
+	.thumbnail img {
+		max-height: 10em;
+	}
+
+	.thumbnail {
+		height: 20em;
+	}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="page-header">
+		<h2>Kaakay List <small>Verified Kaakays</small></h2>
+	</div>
+		
+	<ul class="media-list">
+		{% for p in person_list %}
+		<li class="media">
+			<a href="{{ p.get_absolute_url }}" class="pull-left">
+				<img src="{% if p.image %}{{ p.image.url }}{% else %}https://s3.amazonaws.com/tulong/media/images/default.jpg{% endif %}" alt="" width="50" height="50">
+				
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading"><a href="{{ p.get_absolute_url }}">
+					{{ p.firstname|title }} {{ p.lastname|title }}</a>
+					<br>
+					
+				</h4>
+				<p>
+					{% if p.skills.all %}
+						<strong>Skills:</strong> <br>
+						{% for s in p.skills.all %}
+							<span class="label label-info">{{ s }}</span>
+						{% endfor %}
+						<br>
+					{% endif %}
+					{% if p.badge.all %}
+						<strong>Badges:</strong> <br>
+						{% for b in p.badge.all %}
+							<img src="{{ b.image.url }}" alt="{{ b }}">
+						{% endfor %}
+					{% endif %}
+				</p>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+
+	
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block page_title %}Welcome {{ person.firstname|title }} | tulong.ph {% endblock %}
+{% block page_content %}
+<div class="container">
+<section class="dashboard">
+	{% if jobs_no_comment %}
+	<div class="alert alert-info">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <h4>Give comment and rating!</h4>
+	  You have Tasks that needs to be commented and rated.
+	</div>
+	{% endif %}
+
+	{% if not person.info %}
+	<div class="alert alert-warning">
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	  <h4>Update profile!</h4>
+	  You can update your profile and add a brief description about yourself <a href="{% url 'dashboard:update2' %}">here</a>
+	</div>
+	{% endif %}
+	
+<h2>Hello Kaakay {{ person.firstname|title }}</h2>
+<p>
+	<a href="{% url 'job:list' %}" class="btn btn-large">View Tasks</a>
+	<a href="{% url 'dashboard:update2' %}" class="btn btn-large">Update Profile</a>
+</p>
+<div class="row">
+<div class="col-lg-8">
+	{% if jobs_no_comment %}
+		
+	<h3>Done Tasks that needs commenting</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Task</th>
+				
+				<th>Status</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for job in jobs_no_comment %}
+			<tr class='warning'>
+				<td>{{ job.title }}</td>
+				
+				<td><span class="label label-warning">Give Comment and rating</span>
+				</td>
+				<td><a href="{{ job.get_absolute_url }}">View Job</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+	<h3>Bids waiting to be accepted</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>Date Due</th>
+				<th>Status</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tfoot>
+			{% if jobs_current %}
+			<tr>
+				<td colspan="2"> <a href="{% url 'dashboard:pending' %}">View All Pending Tasks</a> </td>
+			</tr>
+		{% endif %}
+		</tfoot>
+		<tbody>
+		{% if jobs_current %}
+		{% for job in jobs_current %}
+			<tr class='warning'>
+				<td>{{ job.title }}</td>
+				<td>{{ job.date_need.date }}</td>
+				<td>{% if job.bid_set.all %}
+					Waiting for Poster to choose bidders
+					{% endif %}
+					{{ job.is_done }}
+				</td>
+				<td><a href="{{ job.get_absolute_url }}">View Job</a></td>
+			</tr>
+		{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="3">No current Tasks</td>
+			</tr>
+		{% endif %}
+		</tbody>
+	</table>
+
+	<h3>Jobs Won</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>Date Due</th>
+				<th>Status</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tfoot>
+			{% if jobs_won %}
+			<tr>
+				<td colspan="2"> <a href="{% url 'dashboard:successful' %}">View All Won Tasks</a> </td>
+			</tr>
+			{% endif %}
+		</tfoot>
+		<tbody>
+		{% if jobs_won %}
+		{% for job in jobs_won %}
+			<tr class='success'>
+				<td>
+					
+					{{ job.title }}
+				</td>
+				<td>{{ job.date_need.date }}</td>
+				<td>{% if job.is_done %}
+					Completed
+					{% else %}
+					Not yet Completed or Done giving reviews/comments
+					{% endif %}
+					
+				</td>
+				<td><a href="{{ job.get_absolute_url }}">View Job</a></td>
+			</tr>
+		{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan='3'>No Jobs/Tasks won </td>
+			</tr>
+		{% endif %}
+		</tbody>
+	</table>
+
+	{% if jobs_failed %}
+	<h3>Jobs Failed</h3>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>Date Due</th>
+				<th>Status</th>
+				<th>Link</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="2"> <a href="{% url 'dashboard:expired' %}">View All Jobs/Tasks Failed</a> </td>
+			</tr>
+		</tfoot>
+		<tbody>
+		{% for job in jobs_not_chosen %}
+			<tr class='error'>
+				<td>{{ job.title }}</td>
+				<td>{{ job.date_need.date }}</td>
+				<td>{% if job.is_done %} 
+					Your bid was not chosen
+					{% else %}
+					No Chosen Bidders or not Completed
+					{% endif %}
+					</td>
+				<td><a href="{{ job.get_absolute_url }}">View Job</a></td>
+			</tr>
+		{% endfor %}
+		{% for job in jobs_failed %}
+			<tr class='error'>
+				<td>{{ job.title }}</td>
+				<td>{{ job.date_need.date }}</td>
+				<td>{% if job.is_done %} 
+					Your bid was not chosen
+					{% else %}
+					No Chosen Bidders or not Completed
+					{% endif %}
+					</td>
+				<td><a href="{{ job.get_absolute_url }}">View Job</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+<div class="col-lg-4">
+	<table class="table table-striped">
+		<thead>
+			<tr><h3>Notifications</h3></tr>
+		</thead>
+		<tfoot>
+		{% if messages %}
+			<tr>
+				<td><a href="{% url 'dashboard:messages' %}"><small>Viewl All Notifications</small></a></td>
+			</tr>
+		{% endif %}
+		</tfoot>
+		<tbody>
+			{% for m in messages %}
+			<tr>
+				<td>
+					<div class="media">
+						<a href="{{ m.sender.get_absolute_url }}" class="pull-left">
+							<img src="{% if m.sender.image %}{{ m.sender.image.url }}{% else %}https://s3.amazonaws.com/tulong/media/images/default.jpg{% endif %}" alt="" width="40" height="40">
+						</a>
+						<div class="media-body">
+							{{ m.content|safe }}
+							<br>
+							@ <strong>{{ m.pub_date_time }}</strong>
+						</div>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>	
+</div>
+</div>
+</section>
+
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+<script>
+	$(".alert").alert()
+</script>
+</div>
+{%endblock%}

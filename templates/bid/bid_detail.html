@@ -1,0 +1,48 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Bid for {{ bid.job|title }} | tulong.ph {% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<h3 class="box"><a href="{{ bid.job.get_absolute_url }}">{{ bid.job|title }}</a> created by <a href="{{ object.job.creator.get_absolute_url }}"> {{ object.job.creator|title }}</a></h3>
+	<p class="lead">
+		<strong>Bidder: </strong><a href="{{ object.bidder.get_absolute_url }}">{{ object.bidder|title }}</a></br>
+		<strong>Bid: </strong>P{{ bid.amount }}</br>
+		<strong>Bid at: </strong>{{ bid.created_at }}</br>
+		<h3 class="box">Message</h3>
+		<p>
+			{{ bid.message|linebreaks }}
+		</p>
+	</p>
+
+	
+	{% if not bid.job.is_done %}
+		{% if not job_is_expired %}
+			{% if is_poster %}
+			<form action="" method="post">
+				{% csrf_token %}
+				<p>
+					{% if not bid.is_chosen %}
+					<input type="submit" alt="hire" name="hire" value="Accept!" class='btn btn-success btn-large'/>
+					<a href="{{ object.job.get_absolute_url }}" class="btn btn-large">Back</a>
+					{% else %}
+					<input type="submit" alt="unhire" name="unhire" value="UNHIRE!" class='btn btn-danger btn-large'/>
+					{% endif %}
+				</p>
+			</form>
+			{% endif %}
+
+			{% if person.person == bid.bidder %}
+			<div class="btn"><a href="delete">Delete</a></div>
+			{% endif %}
+		{% else %}
+			<p class='lead'><span class="text-warning">Job has Expired Cannot</span></p>
+		{% endif %}
+	{% else %}
+		<p>Job is already done cannot hire anymore</p>
+		<p>This bid is archived</p>
+	{% endif %}
+</div>
+{% endblock %}

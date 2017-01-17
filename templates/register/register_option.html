@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+	{% block page_title %}Tulong.ph {% endblock %}
+	
+{% block page_content %}
+<section class="home">
+	<section class="hero-unit">
+		<h1>Tulong!</h1>
+		<p>Welcome to Tulong.ph. The place where you can find Help!</p>
+		<section class='body_mid'>
+			<a href="{% url 'register:register' 'doer' %}"><img src="{{ STATIC_URL }}images/do.png"></a>
+		
+			<a href="{% url 'register:register' 'poster' %}"><img src="{{ STATIC_URL }}images/post.png"></a>
+		</section>
+	</section>
+</section>
+
+{% endblock %}
+
+
+

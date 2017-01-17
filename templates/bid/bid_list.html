@@ -1,0 +1,22 @@
+
+
+{% extends "base.html" %}
+{% load url from future %}
+{% block page_title %}Bid Detail {% endblock %}
+
+{% block page_content %}
+<h1>Bid list</h1>
+	{% for b in bid_list %}
+		<p>
+			<a href="{% url 'bid:detail' b.pk %}">
+				{{ b.job }} {{b.job.creator}}
+			</a>
+			bidder:{{ b.person }}
+			amount:{{ b.amount}}
+		</p>
+	{% endfor %}
+	
+
+
+
+{% endblock %}

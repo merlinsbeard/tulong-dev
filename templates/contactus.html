@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+	{% block page_title %}Contact Us! | tulong.ph {% endblock %}
+{% block page_content %}
+<div class="container">
+	{% if success_message %}
+		<div class="alert alert-success">
+			{{ success_message }}
+			<ul>
+				<li>
+					Name: {{ name| title }}
+				</li>
+				<li>
+					Email: {{ from_email }}
+				</li>
+				
+				<li>
+					Message: {{ message|linebreaks }}
+				</li>
+				
+
+
+			</ul>
+		</div>	
+	{% endif %}
+	<div class="page-header">
+		<h1>Contact us!</h1>
+		<p class="lead text-muted">We are always happy and eager to hear from you.</p>
+	</div>
+	<div class="row">
+		<div class="col-lg-5 col-offset-1 col-sm-8" >
+			<form action="" method="post" >
+			    {% csrf_token %}
+				{% if form.name.errors %}
+					<p class="text-danger">
+						{{ form.name.errors }}
+					</p>
+					<div class="form-group has-error">
+						<label for="{{ form.name.auto_id}}" class="control-label">
+						{{ form.name.label }}
+						</label>
+						{{ form.name }}
+					</div>
+					{% else %}
+					<div class="form-group">
+						<label for="{{ form.name.auto_id}}">
+						{{ form.name.label }}
+						</label>
+						{{ form.name }}
+					</div>
+				{% endif %}
+
+				{% if form.email.errors %}
+					<p class="text-danger">
+						{{ form.email.errors }}
+					</p>
+					<div class="form-group has-error">
+						<label for="{{ form.email.auto_id}}" class="control-label">
+						{{ form.email.label }}
+						</label>
+						{{ form.email }}
+					</div>
+				{% else %}
+					<div class="form-group">
+						<label for="{{ form.email.auto_id}}">
+						{{ form.email.label }}
+						</label>
+						{{ form.email }}
+					</div>
+				{% endif %}
+
+					
+
+					{% if form.message.errors %}
+					<p class="text-danger">
+						{{ form.message.errors }}
+					</p>
+					<div class="form-group has-error">
+						<label for="{{ form.message.auto_id}}" class="control-label">
+						{{ form.message.label }}
+						</label>
+						{{ form.message }}
+					</div>
+					{% else %}
+					<div class="form-group">
+						<label for="{{ form.message.auto_id}}">
+						{{ form.message.label }}
+						</label>
+						{{ form.message }}
+					</div>
+					{% endif %}
+	
+
+					
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-success btn-large">Success</button>
+					</div>
+			</form>
+			<div class="row">
+				<iframe width="550" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps/ms?msa=0&amp;msid=204672285812756870871.0004dd2434f71711d5ca4&amp;ie=UTF8&amp;t=m&amp;ll=14.625652,121.124053&amp;spn=0.009966,0.013733&amp;z=16&amp;output=embed"></iframe><br /><small>View <a href="https://maps.google.com/maps/ms?msa=0&amp;msid=204672285812756870871.0004dd2434f71711d5ca4&amp;ie=UTF8&amp;t=m&amp;ll=14.625652,121.124053&amp;spn=0.009966,0.013733&amp;z=16&amp;source=embed" style="color:#0000FF;text-align:left">Golden Global Success Training &amp; Solutions</a> in a larger map</small>
+			</div>
+		</div>
+
+		<div class="col-lg-3 col-offset-1 col-sm-4" >
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Address</h3>
+				</div>
+				<p class="text-success">
+					<address>
+						  <strong>tulong.ph</strong><br>
+						  302 Rickland Centre<br>
+						  Masinag, Antipolo City<br>
+					</address>
+				</p>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Email</h3>
+				</div>
+				<p class="text-success">
+					<em>cs@tulong.ph</em>
+				</p>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Number</h3>
+				</div>
+				<p class="text-success">
+					<em>+63 917 XXX XXXX</em> <br>
+					<em>+63 2 477 XXXX</em>
+				</p>
+			</div>
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Social</h3>
+				</div>
+				<p class="text-success">
+					<a href="facebook.com/tulongph">Facebook</a> <br>
+					<a href="twitter.com/tulongph">Twitter</a> <br>
+					<a href="blog.tulong.ph">Blog</a> <br>
+				</p>
+			</div>
+		</div>	
+	</div>
+		
+</div>
+	
+
+{% endblock %}
+
+
+

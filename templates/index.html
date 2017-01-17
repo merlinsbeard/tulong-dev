@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load url from future %}
+	{% block page_title %}Let us do your chores and tasks | tulong.ph {% endblock %}
+	{% block extrahead %}
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-40507232-1']);
+	  _gaq.push(['_setDomainName', 'tulong.ph']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>
+	<link href="" rel="stylesheet">
+	<style type="text/css">
+.inside_text {
+		position: absolute;
+		top:0px;
+		left: 0;
+	}
+
+	.inside_body_upper{
+		position: relative;
+		
+		margin: 0 auto;
+		background: red;
+		min-height: 556px;
+		background: url(https://s3.amazonaws.com/tulong/static/images/bannerpicsmallsize.jpg) no-repeat center center; background-size:cover;
+	}
+	.inside_text{ 
+		padding-left: 2em;
+		max-width: 300px;
+		
+	}
+	.e2 {
+		width: 40%;
+	}
+	.fuck {
+		
+		margin: 0 auto;
+	}
+
+	.container { max-width: 1000px;}
+
+	.body_mid{ background: #2d2d2d; color:white;}
+
+	img.mid { display:block; margin: 0 auto;}
+	
+	.body_lower img{padding: 1em;}
+	header, .body_upper{ background: url(https://s3.amazonaws.com/tulong/static/images/bgfinal.jpg) repeat repeat center center;}
+	
+	.body_upper .inside_body_upper { margin: 1em;}
+</style>
+	{% endblock%}
+
+
+{% block page_content %}
+
+
+<div class="body_upper">
+	<div class="container">
+		<div class="inside_body_upper">
+			<div class="inside_text">
+				
+					<h2 style="
+						color:white;
+						text-shadow: -1px 1px 2px rgba(0, 0, 0, 1);
+						">If you can't do it someone else can!</h2>
+						<p class="lead"style="
+						color:white;
+						text-shadow: -1px 1px 2px rgba(0, 0, 0, 1);
+						">
+							We help you connect to people ready to do your task or service.
+						</p>
+					
+					<p>
+					
+					<a href="{% url 'register:register' 'poster' %}" class="btn btn-success btn-large btn-block">
+						Post A task or Service now!
+					</a>
+					</p>
+					<p class="lead text-center text-warning">
+						or
+
+					</p>
+					
+					<a href="{% url 'register:register' 'doer' %}" class="btn btn-primary btn-block">
+						<p>
+						Become a Kaakay and 
+						<br>
+						start earning by helping.
+					
+					</p>
+					</a>
+					
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="body_mid">
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+				<h3 class="text-center">How it works!</h3>
+			</div>
+		</div>
+		<div class="row fuck">
+				<div class="col-lg-4 col-sm-4 ">
+					<img src="https://s3.amazonaws.com/tulong/static/images/firstsingle.png" alt="" class="mid">
+					<h4>
+						Now, tulong won't be too long, with tulong.ph!
+					</h4>
+					<p>
+						tulong.ph is where task posters and job doers meet and do business.Everyone has the same goal: to help.
+					</p>
+				</div>
+				<div class="col-lg-4 col-sm-4">
+					<img src="https://s3.amazonaws.com/tulong/static/images/lastsingle.png" alt="" class="mid">
+					<h4>
+						Post tasks and let someone else do them for you.
+					</h4>
+					<p>
+						No time to clean the house? Post the need and wait for tulong.ph to provide you with help: a reliable kaakay to provide the service.
+					</p>
+				</div>
+				<div class="col-lg-4 col-sm-4">
+					<img src="https://s3.amazonaws.com/tulong/static/images/firstsingle.png" alt="" class="mid">
+					<h4>
+						Be a Kaakay, provide the service, and improve your skills while learning.
+					</h4>
+					<p>
+						Got lots of free hours? Convert them to income through tulong.ph. Simply bid on jobs you can possibly do, help a poster with the task, get paid and practice your skill at the same time.
+					</p>
+				</div>
+			
+		</div>
+		<div class="row">
+			<img src="https://s3.amazonaws.com/tulong/static/images/khFurGp.png" alt="" class="mid">
+		</div>
+	</div>
+</div>
+<section class="body_lower">
+	<section class="container">
+		<div class="row-fluid">
+				
+		</div>
+		<div class="row-fluid">
+			<div class="row-fluid text-center">
+				<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/cook.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/dish.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/fix.jpg" alt="">
+				
+			</div>
+			<div class="row-fluid text-center">
+				<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/gardening.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/grocery.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/housem.jpg" alt="">
+				
+			</div>
+			<div class="row-fluid text-center">
+				<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/laundry.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/pet.jpg" alt="">
+				
+					<img class="sample" src="https://s3.amazonaws.com/tulong/static/images/carx.jpg" alt="">
+			</div>
+		</div>
+	</section>
+</section>
+<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+    <script>
+    $('.carousel').carousel()
+    </script>
+
+
+
+{% endblock %}
+
+
+
